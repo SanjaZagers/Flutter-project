@@ -1,3 +1,7 @@
+import 'package:beginners_course/pages/first_page.dart';
+import 'package:beginners_course/pages/home_page.dart';
+import 'package:beginners_course/pages/second_page.dart';
+import 'package:beginners_course/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,8 +13,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: FirstPage(), 
+      routes: {
+        '/firstpage' : (context) => FirstPage(), 
+        '/secondpage' : (context) => SecondPage(), 
+        '/homepage': (context) => HomePage(), 
+        '/settingspage' : (context) => SettingsPage()
+      },
     );
     
   }
