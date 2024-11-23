@@ -2,9 +2,8 @@ import 'package:beginners_course/pages/home_page.dart';
 import 'package:beginners_course/pages/profile_page.dart';
 import 'package:beginners_course/pages/second_page.dart';
 import 'package:beginners_course/pages/settings_page.dart';
+import 'package:beginners_course/pages/custom_text_field.dart'; 
 import 'package:flutter/material.dart';
-
-
 
 class FirstPage extends StatefulWidget {
    FirstPage({super.key});  
@@ -24,9 +23,10 @@ class _FirstPageState extends State<FirstPage> {
 
 final List _pages = [
   HomePage(), 
+  CustomTextField(),
+  SecondPage(), 
    ProfilePage(), 
   SettingsPage(),
- 
 ];
 
   @override
@@ -51,6 +51,23 @@ final List _pages = [
             onTap: () {
               Navigator.pop(context); 
               Navigator.pushNamed(context, '/homepage'); 
+            },
+          ), 
+                ListTile(
+            leading: const Icon(Icons.person_pin_circle),
+            title: const Text("T E X T I N G"),
+            onTap: () {
+              Navigator.pop(context); 
+              Navigator.pushNamed(context, '/customtextfield'); 
+            },
+          ), 
+
+                    ListTile(
+            leading: const Icon(Icons.check_circle_outline),
+            title: const Text("T O  D O"),
+            onTap: () {
+              Navigator.pop(context); 
+              Navigator.pushNamed(context, '/secondpage'); 
             },
           ), 
 
