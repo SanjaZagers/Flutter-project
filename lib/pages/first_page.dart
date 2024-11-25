@@ -1,6 +1,6 @@
 import 'package:beginners_course/pages/home_page.dart';
 import 'package:beginners_course/pages/profile_page.dart';
-import 'package:beginners_course/pages/second_page.dart';
+import 'package:beginners_course/pages/todo_page.dart';
 import 'package:beginners_course/pages/settings_page.dart';
 import 'package:beginners_course/pages/custom_text_field.dart'; 
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ class _FirstPageState extends State<FirstPage> {
 final List _pages = [
   HomePage(), 
   CustomTextField(),
-  SecondPage(), 
+  ToDoPage(), 
    ProfilePage(), 
   SettingsPage(),
 ];
@@ -67,7 +67,7 @@ final List _pages = [
             title: const Text("T O  D O"),
             onTap: () {
               Navigator.pop(context); 
-              Navigator.pushNamed(context, '/secondpage'); 
+              Navigator.pushNamed(context, '/todopage'); 
             },
           ), 
 
