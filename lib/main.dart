@@ -3,6 +3,7 @@ import 'package:beginners_course/pages/home_page.dart';
 import 'package:beginners_course/pages/todo_page.dart';
 import 'package:beginners_course/pages/settings_page.dart';
 import 'package:beginners_course/pages/custom_text_field.dart';
+import 'package:beginners_course/pages/weather_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         '/todopage': (context) => const ToDoPage(),
         '/homepage': (context) => const HomePage(),
         '/settingspage': (context) => const SettingsPage(),
+        '/weatherpage': (context) => const WeatherPage(),
       },
     );
   }
