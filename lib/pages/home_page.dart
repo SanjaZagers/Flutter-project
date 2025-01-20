@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -6,9 +7,25 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Home")),
-        body: const Center(
-          child: Text("This should be homepage"),
-        ));
+      appBar: AppBar(title: const Text("Home")),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "This should be homepage",
+              style: TextStyle(fontSize: 24),
+            ),
+            SizedBox(height: 20),
+            Lottie.asset(
+              'assets/cat.json',
+              width: 200,
+              height: 220,
+              fit: BoxFit.cover,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
