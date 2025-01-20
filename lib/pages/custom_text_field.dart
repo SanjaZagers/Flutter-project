@@ -16,7 +16,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     String userName = myController.text;
 
     setState(() {
-      greetingMessage = "Hello, " + userName;
+      greetingMessage = "Hello, $userName";
     });
   }
 
@@ -24,7 +24,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Custom TextField"),
+        title: const Text("Custom TextField"),
       ),
       body: Center(
         child: Padding(
@@ -32,17 +32,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(greetingMessage), 
+              Text(greetingMessage),
               TextField(
-                controller: myController, 
-                decoration: InputDecoration(
+                controller: myController,
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: "Your name...", 
+                  hintText: "Your name...",
                 ),
               ),
               ElevatedButton(
-                onPressed: greetUser, 
-                child: Text("Tap"),
+                onPressed: greetUser,
+                child: const Text("Tap"),
               )
             ],
           ),
