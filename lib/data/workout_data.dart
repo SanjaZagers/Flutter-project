@@ -1,4 +1,5 @@
 import 'package:beginners_course/data/workout_hive.dart';
+import 'package:beginners_course/datatime/data_time.dart';
 import 'package:beginners_course/models/exercise.dart';
 import 'package:beginners_course/models/workout.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,9 @@ class WorkoutData extends ChangeNotifier {
     else {
       db.saveToDatabase(workoutList);
     }
+
+    // load heat map
+    loadHeatMap();
   }
 
 // get the list of workouts
@@ -85,6 +89,8 @@ class WorkoutData extends ChangeNotifier {
     notifyListeners();
     // save to database
     db.saveToDatabase(workoutList);
+    // load heat map
+    loadHeatMap();
   }
 
 // return relevant workout object, given a workout name
@@ -105,5 +111,48 @@ class WorkoutData extends ChangeNotifier {
         .firstWhere((exercise) => exercise.name == exerciseName);
 
     return relevantExercise;
+  }
+
+  // get start date
+  String getStartDate() {
+    return db.getStartDate();
+  }
+
+  /*
+HEAT MAP
+
+  */
+  Map<DateTime, int> heatMapDataSet = {};
+
+  void loadHeatMap() {
+    DateTime startDate = createDateTimeObject(getStartDate());
+
+// count the number of days to load
+    int daysInBetween = DateTime.now().difference(startDate).inDays;
+
+    // go from start date to today, and add each completion status to the dataset
+    // "COMPLETION_STATUS_yyyymmdd" will be the key in the databse
+
+    for (int i = 0; i < daysInBetween + 1; i++) {
+      String yyyymmdd =
+          convertDateTimeToYYYYMMDD(startDate.add(Duration(days: i)));
+
+      // completion status = 0 or 1
+      int completionStatus = db.getCompletionStatus(yyyymmdd);
+
+      //year
+      int year = startDate.add(Duration(days: i)).year;
+      //month
+      int month = startDate.add(Duration(days: i)).month;
+      //day
+      int day = startDate.add(Duration(days: i)).day;
+
+      final percentageForEachDay = <DateTime, int>{
+        DateTime(year, month, day): completionStatus
+      };
+
+      // add this to the heat map dataset
+      heatMapDataSet.addEntries(percentageForEachDay.entries);
+    }
   }
 }
