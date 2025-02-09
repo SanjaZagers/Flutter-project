@@ -11,6 +11,13 @@ class WorkoutPage extends StatefulWidget {
 }
 
 class _WorkoutPage extends State<WorkoutPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    Provider.of<WorkoutData>(context, listen: false).intializeWorkoutList();
+  }
+
 // text controller
   final newWorkoutNameController = TextEditingController();
 

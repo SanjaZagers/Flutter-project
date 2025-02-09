@@ -15,6 +15,7 @@ void main() async {
 
   await Hive.initFlutter();
   await Hive.openBox('mybox');
+  await Hive.openBox("workout_database");
   var box = await Hive.openBox('mybox');
 
   runApp(const MyApp());

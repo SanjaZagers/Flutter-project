@@ -1,8 +1,10 @@
+import 'package:beginners_course/data/workout_hive.dart';
 import 'package:beginners_course/models/exercise.dart';
 import 'package:beginners_course/models/workout.dart';
 import 'package:flutter/material.dart';
 
 class WorkoutData extends ChangeNotifier {
+  final db = HiveDatabase();
   /* 
 
   WORKOUT DATA STRUCTURE 
@@ -17,8 +19,25 @@ class WorkoutData extends ChangeNotifier {
       exercises: [
         Exercise(name: "Bicep Curls", weight: "10", reps: "10", sets: "3"),
       ],
+    ),
+    Workout(
+      name: "Lower body",
+      exercises: [
+        Exercise(name: "Squats", weight: "10", reps: "10", sets: "3"),
+      ],
     )
   ];
+// if there are workouts already in the database, then get that workout list,
+
+  void intializeWorkoutList() {
+    if (db.previousDataExists()) {
+      workoutList = db.readFromDatabase();
+    }
+    //  otherwise use default workouts
+    else {
+      db.saveToDatabase(workoutList);
+    }
+  }
 
 // get the list of workouts
   List<Workout> getWorkoutList() {
@@ -38,6 +57,8 @@ class WorkoutData extends ChangeNotifier {
     workoutList.add(Workout(name: name, exercises: []));
 
     notifyListeners();
+    // save to database
+    db.saveToDatabase(workoutList);
   }
 
 // add an exercise to a workout
@@ -59,8 +80,11 @@ class WorkoutData extends ChangeNotifier {
 
     // check off boolean to show user completed the exercise
     relevantExercise.isCompleted = !relevantExercise.isCompleted;
+    print('tapped');
 
     notifyListeners();
+    // save to database
+    db.saveToDatabase(workoutList);
   }
 
 // return relevant workout object, given a workout name

@@ -36,6 +36,7 @@ class _WorkingoutPageState extends State<WorkingoutPage> {
             // exercise name
             TextField(
               controller: exerciseNameController,
+              decoration: InputDecoration(hintText: "name"),
             ),
             // weight
             TextField(
