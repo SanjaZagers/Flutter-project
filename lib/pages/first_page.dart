@@ -4,6 +4,7 @@ import 'package:beginners_course/pages/todo_page.dart';
 import 'package:beginners_course/pages/settings_page.dart';
 import 'package:beginners_course/pages/custom_text_field.dart';
 import 'package:beginners_course/pages/weather_page.dart';
+import 'package:beginners_course/pages/workout_page.dart';
 import 'package:flutter/material.dart';
 
 class FirstPage extends StatefulWidget {
@@ -29,6 +30,7 @@ class _FirstPageState extends State<FirstPage> {
     const ProfilePage(),
     const SettingsPage(),
     const WeatherPage(),
+    const WorkoutPage()
   ];
 
   @override
@@ -79,7 +81,14 @@ class _FirstPageState extends State<FirstPage> {
               onTap: () {
                 Navigator.pushNamed(context, '/weatherpage');
               },
-            )
+            ),
+            ListTile(
+              leading: const Icon(Icons.fitness_center),
+              title: const Text("W O R K O U T"),
+              onTap: () {
+                Navigator.pushNamed(context, '/workoutpage');
+              },
+            ),
           ])),
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedIndex,

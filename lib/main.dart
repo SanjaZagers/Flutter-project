@@ -1,12 +1,14 @@
+import 'package:beginners_course/data/workout_data.dart';
 import 'package:beginners_course/pages/first_page.dart';
 import 'package:beginners_course/pages/home_page.dart';
 import 'package:beginners_course/pages/todo_page.dart';
 import 'package:beginners_course/pages/settings_page.dart';
 import 'package:beginners_course/pages/custom_text_field.dart';
 import 'package:beginners_course/pages/weather_page.dart';
+import 'package:beginners_course/pages/workout_page.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,17 +25,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: FirstPage(), // Default starting page
-      routes: {
-        '/firstpage': (context) => FirstPage(),
-        '/customtextfield': (context) => const CustomTextField(),
-        '/todopage': (context) => const ToDoPage(),
-        '/homepage': (context) => const HomePage(),
-        '/settingspage': (context) => const SettingsPage(),
-        '/weatherpage': (context) => const WeatherPage(),
-      },
+    return ChangeNotifierProvider(
+      create: (context) => WorkoutData(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: FirstPage(), // Default starting page
+        routes: {
+          '/firstpage': (context) => FirstPage(),
+          '/customtextfield': (context) => const CustomTextField(),
+          '/todopage': (context) => const ToDoPage(),
+          '/homepage': (context) => const HomePage(),
+          '/settingspage': (context) => const SettingsPage(),
+          '/weatherpage': (context) => const WeatherPage(),
+          '/workoutpage': (context) => const WorkoutPage(),
+        },
+      ),
     );
   }
 }
