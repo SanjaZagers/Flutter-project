@@ -29,14 +29,14 @@ class _WorkingoutPageState extends State<WorkingoutPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("Add a new exercise"),
+        title: const Text("Add a new exercise"),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             // exercise name
             TextField(
               controller: exerciseNameController,
-              decoration: InputDecoration(hintText: "name"),
+              decoration: const InputDecoration(hintText: "name"),
             ),
             // weight
             TextField(
@@ -56,13 +56,13 @@ class _WorkingoutPageState extends State<WorkingoutPage> {
           // save button
           MaterialButton(
             onPressed: save,
-            child: Text("save"),
+            child: const Text("save"),
           ),
 
           // cancel button
           MaterialButton(
             onPressed: cancel,
-            child: Text("cancel"),
+            child: const Text("cancel"),
           ),
         ],
       ),
@@ -111,7 +111,7 @@ class _WorkingoutPageState extends State<WorkingoutPage> {
         appBar: AppBar(title: Text(widget.workoutName)),
         floatingActionButton: FloatingActionButton(
           onPressed: createNewExercise,
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
         ),
         body: ListView.builder(
           itemCount: value.numberOfExercisesInWorkout(widget.workoutName),

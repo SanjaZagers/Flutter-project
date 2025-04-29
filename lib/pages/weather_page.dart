@@ -87,7 +87,7 @@ class _WeatherPageState extends State<WeatherPage> {
         ),
         child: Center(
           child: _weather == null
-              ? CircularProgressIndicator()
+              ? const CircularProgressIndicator()
               : Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,

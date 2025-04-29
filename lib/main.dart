@@ -30,9 +30,9 @@ class MyApp extends StatelessWidget {
       create: (context) => WorkoutData(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: FirstPage(), // Default starting page
+        home: const FirstPage(), // Default starting page
         routes: {
-          '/firstpage': (context) => FirstPage(),
+          '/firstpage': (context) => const FirstPage(),
           '/customtextfield': (context) => const CustomTextField(),
           '/todopage': (context) => const ToDoPage(),
           '/homepage': (context) => const HomePage(),
