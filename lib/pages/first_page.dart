@@ -1,10 +1,6 @@
 import 'package:beginners_course/pages/home_page.dart';
 import 'package:beginners_course/pages/profile_page.dart';
-import 'package:beginners_course/pages/todo_page.dart';
 import 'package:beginners_course/pages/settings_page.dart';
-import 'package:beginners_course/pages/custom_text_field.dart';
-import 'package:beginners_course/pages/weather_page.dart';
-import 'package:beginners_course/pages/workout_page.dart';
 import 'package:flutter/material.dart';
 
 class FirstPage extends StatefulWidget {
@@ -25,18 +21,14 @@ class _FirstPageState extends State<FirstPage> {
 
   final List _pages = [
     const HomePage(),
-    const CustomTextField(),
-    const ToDoPage(),
     const ProfilePage(),
     const SettingsPage(),
-    const WeatherPage(),
-    const WorkoutPage()
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("1ste page")),
+      appBar: AppBar(title: const Text("Welcome")),
       body: _pages[_selectedIndex],
 
       //hamburger
@@ -87,6 +79,13 @@ class _FirstPageState extends State<FirstPage> {
               title: const Text("W O R K O U T"),
               onTap: () {
                 Navigator.pushNamed(context, '/workoutpage');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.bloodtype),
+              title: const Text("T R A C K E R"),
+              onTap: () {
+                Navigator.pushNamed(context, '/periodTracker');
               },
             ),
           ])),

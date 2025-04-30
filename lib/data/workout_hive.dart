@@ -1,6 +1,7 @@
 import 'package:beginners_course/datatime/data_time.dart';
 import 'package:beginners_course/models/exercise.dart';
 import 'package:beginners_course/models/workout.dart';
+import 'package:beginners_course/data/workout_data.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HiveDatabase {
@@ -26,25 +27,32 @@ class HiveDatabase {
 
   // write data
   void saveToDatabase(List<Workout> workouts) {
-    // convert workout objects into lists of Strings so that we can save in Hive
+    // convert workout objects into lists of strings to save in hive
     final workoutList = convertObjectToWorkoutList(workouts);
-    final ExerciseList = convertObjectToExerciseList(workouts);
+    final exerciseList = convertObjectToExerciseList(workouts);
 
-    /*
-  check if any exercises have been done
-  we will put a 0 or a 1 to each yyyymmdd date 
-
-    */
-
-    if (exerciseCompleted(workouts)) {
-      _myBox.put("COMPLETION_STATUS${todaysDateYYYYMMDD()}", 1);
-    } else {
-      _myBox.put("COMPLETION_STATUS${todaysDateYYYYMMDD()}", 0);
+    // THIS IS THE KEY FIX:
+    // if a specific exercise has been completed, check off the completion status for today's date
+    if (checkIfAnyExerciseCompleted(workouts)) {
+      String todayDate = convertDateTimeToYYYYMMDD(DateTime.now());
+      _myBox.put("COMPLETION_STATUS_$todayDate", 1);
     }
 
-    // save into Hive
+    // save into hive
     _myBox.put("WORKOUTS", workoutList);
-    _myBox.put("EXERCISES", ExerciseList);
+    _myBox.put("EXERCISES", exerciseList);
+  }
+
+// Added helper method to check if any exercises are completed
+  bool checkIfAnyExerciseCompleted(List<Workout> workouts) {
+    for (var workout in workouts) {
+      for (var exercise in workout.exercises) {
+        if (exercise.isCompleted) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   // read data, and return a list of workouts

@@ -18,7 +18,7 @@ class _WorkoutPage extends State<WorkoutPage> {
   void initState() {
     super.initState();
 
-    Provider.of<WorkoutData>(context, listen: false).intializeWorkoutList();
+    Provider.of<WorkoutData>(context, listen: false).initializeWorkoutList();
   }
 
 // text controller

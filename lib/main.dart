@@ -1,6 +1,7 @@
 import 'package:beginners_course/data/workout_data.dart';
 import 'package:beginners_course/pages/first_page.dart';
 import 'package:beginners_course/pages/home_page.dart';
+import 'package:beginners_course/pages/periodTracker_page.dart';
 import 'package:beginners_course/pages/todo_page.dart';
 import 'package:beginners_course/pages/settings_page.dart';
 import 'package:beginners_course/pages/custom_text_field.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
           '/settingspage': (context) => const SettingsPage(),
           '/weatherpage': (context) => const WeatherPage(),
           '/workoutpage': (context) => const WorkoutPage(),
+          '/periodTracker': (context) => PeriodTracker(),
         },
       ),
     );
