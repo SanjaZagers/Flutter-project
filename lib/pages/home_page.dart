@@ -1,7 +1,7 @@
-import 'package:beginners_course/pages/profile_page.dart';
-import 'package:beginners_course/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:beginners_course/pages/profile_page.dart';
+import 'package:beginners_course/pages/settings_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,29 +10,30 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   int _selectedIndex = 0;
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    );
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   // List of pages for navigation
   final List<Widget> _pages = [
-    Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            "This should be homepage",
-            style: TextStyle(fontSize: 24),
-          ),
-          const SizedBox(height: 20),
-          Lottie.asset(
-            'assets/cat.json',
-            width: 200,
-            height: 220,
-            fit: BoxFit.cover,
-          ),
-        ],
-      ),
-    ),
+    const HomeContent(),
     const ProfilePage(),
     const SettingsPage(),
   ];
@@ -41,6 +42,12 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  // Navigate from drawer
+  void _navigateFromDrawer(BuildContext context, String routeName) {
+    Navigator.pop(context);
+    Navigator.pushNamed(context, routeName);
   }
 
   @override
@@ -67,64 +74,314 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-//hamburger
       drawer: Drawer(
-          backgroundColor: Colors.deepPurple[100],
-          child: Column(children: [
+        backgroundColor: Colors.purple[100],
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
             const DrawerHeader(child: Icon(Icons.favorite, size: 48)),
             ListTile(
               leading: const Icon(Icons.home),
               title: const Text("H O M E"),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/homepage');
-              },
+              onTap: () => _navigateFromDrawer(context, '/homepage'),
             ),
             ListTile(
               leading: const Icon(Icons.person_pin_circle),
               title: const Text("T E X T I N G"),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/customtextfield');
-              },
+              onTap: () => _navigateFromDrawer(context, '/customtextfield'),
             ),
             ListTile(
               leading: const Icon(Icons.check_circle_outline),
               title: const Text("T O  D O"),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/todopage');
-              },
+              onTap: () => _navigateFromDrawer(context, '/todopage'),
             ),
             ListTile(
               leading: const Icon(Icons.settings),
               title: const Text("S E T T I N G S"),
-              onTap: () {
-                Navigator.pushNamed(context, '/settingspage');
-              },
+              onTap: () => _navigateFromDrawer(context, '/settingspage'),
             ),
             ListTile(
               leading: const Icon(Icons.cloud),
               title: const Text("W E A T H E R"),
-              onTap: () {
-                Navigator.pushNamed(context, '/weatherpage');
-              },
+              onTap: () => _navigateFromDrawer(context, '/weatherpage'),
             ),
             ListTile(
               leading: const Icon(Icons.fitness_center),
               title: const Text("W O R K O U T"),
-              onTap: () {
-                Navigator.pushNamed(context, '/workoutpage');
-              },
+              onTap: () => _navigateFromDrawer(context, '/workoutpage'),
             ),
             ListTile(
               leading: const Icon(Icons.bloodtype),
               title: const Text("T R A C K E R"),
-              onTap: () {
-                Navigator.pushNamed(context, '/periodTracker');
-              },
+              onTap: () => _navigateFromDrawer(context, '/periodTracker'),
             ),
-          ])),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class HomeContent extends StatelessWidget {
+  const HomeContent({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final String userName = " "; //change this in settings
+//  final String moodCounter = " "; // change your daily mood
+    final String goodNews =
+        "You've completed all tasks for today"; // New page with RSS news articles
+    final String lastWorkoutDays = "2";
+    final String currentDate = "May 4, 2025";
+    // final String lastPeriod = " ";
+
+    return Container(
+      color: Colors.purple[100],
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView(
+          children: [
+            // Welcome card with avatar
+            Card(
+              elevation: 4,
+              shadowColor: Colors.purple[30],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.purple[200],
+                      child: Text(
+                        userName.isNotEmpty ? userName[0] : "?",
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Welcome, $userName",
+                            style: const TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.purple,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            // Good News card with icon
+            Card(
+              elevation: 4,
+              shadowColor: Colors.purple[30],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Row(
+                      children: [
+                        Icon(
+                          Icons.celebration,
+                          color: Colors.amber,
+                          size: 28,
+                        ),
+                        SizedBox(width: 12),
+                        Text(
+                          "Good News of Today:",
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.purple,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Divider(height: 20),
+                    Text(
+                      goodNews,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.grey[800],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            // Workout card with icon
+            Card(
+              elevation: 4,
+              shadowColor: Colors.purple[30],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Row(
+                      children: [
+                        Icon(
+                          Icons.fitness_center,
+                          color: Colors.blue,
+                          size: 28,
+                        ),
+                        SizedBox(width: 12),
+                        Text(
+                          "Last day since workout:",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.purple,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Divider(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          lastWorkoutDays,
+                          style: const TextStyle(
+                            fontSize: 36,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          "days ago",
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey[800],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            // Date card with calendar icon
+            Card(
+              elevation: 4,
+              shadowColor: Colors.purple[30],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.calendar_today,
+                      color: Colors.purple[400],
+                      size: 24,
+                    ),
+                    const SizedBox(width: 12),
+                    Text(
+                      currentDate,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey[800],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            // Period
+            Card(
+              elevation: 4,
+              shadowColor: Colors.purple[30],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Row(
+                      children: [
+                        Icon(
+                          Icons.fitness_center,
+                          color: Colors.blue,
+                          size: 28,
+                        ),
+                        SizedBox(width: 12),
+                        Text(
+                          "Last day since period: ",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.purple,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Divider(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          lastWorkoutDays,
+                          style: const TextStyle(
+                            fontSize: 36,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          "days ago",
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey[800],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+          ],
+        ),
+      ),
     );
   }
 }

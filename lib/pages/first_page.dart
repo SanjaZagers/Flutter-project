@@ -61,13 +61,6 @@ class _FirstPageState extends State<FirstPage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text("S E T T I N G S"),
-              onTap: () {
-                Navigator.pushNamed(context, '/settingspage');
-              },
-            ),
-            ListTile(
               leading: const Icon(Icons.cloud),
               title: const Text("W E A T H E R"),
               onTap: () {

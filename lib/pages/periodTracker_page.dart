@@ -249,7 +249,6 @@ class _PeriodTrackerState extends State<PeriodTracker> {
   Widget _buildLegendCard() {
     return Card(
       elevation: 4,
-      // color: Colors.purple[100],
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -261,11 +260,6 @@ class _PeriodTrackerState extends State<PeriodTracker> {
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Tap on a date to record or update your period.',
-              style: TextStyle(fontSize: 14),
             ),
             SizedBox(height: 8),
             Text(

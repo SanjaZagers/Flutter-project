@@ -77,7 +77,7 @@ class _ToDoPageState extends State<ToDoPage> {
     return Scaffold(
         backgroundColor: Colors.purple[100],
         appBar: AppBar(
-          title: const Text("To Do"),
+          title: const Text("To Do List"),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: createNewTask,
