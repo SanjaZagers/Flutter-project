@@ -1,7 +1,8 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-// Import shared_preferences for local storage
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
@@ -141,81 +142,84 @@ class _PeriodTrackerState extends State<PeriodTracker> {
       appBar: AppBar(
         title: Text('Period Tracker'),
       ),
-      body: Column(
-        children: [
-          TableCalendar(
-            firstDay: DateTime.utc(2020, 1, 1),
-            lastDay: DateTime.utc(2030, 12, 31),
-            focusedDay: _focusedDay,
-            calendarFormat: _calendarFormat,
-            selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-            onDaySelected: (selectedDay, focusedDay) {
-              if (!_isDialogOpen) {
-                setState(() {
-                  _selectedDay = selectedDay;
-                  _focusedDay = focusedDay;
-                  _selectedIntensity = _periodData[DateTime(
-                        selectedDay.year,
-                        selectedDay.month,
-                        selectedDay.day,
-                      )] ??
-                      1;
-                });
-                // Wait until after build to show dialog
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  _showIntensityDialog();
-                });
-              }
-            },
-            onFormatChanged: (format) {
-              setState(() {
-                _calendarFormat = format;
-              });
-            },
-            onPageChanged: (focusedDay) {
-              _focusedDay = focusedDay;
-            },
-            calendarBuilders: CalendarBuilders(
-              defaultBuilder: (context, day, focusedDay) {
-                // Check if this day has period data
-                final eventDay = DateTime(day.year, day.month, day.day);
-                final intensity = _periodData[eventDay];
-
-                if (intensity != null) {
-                  return Container(
-                    margin: const EdgeInsets.all(4.0),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _getFlowColor(intensity),
-                    ),
-                    child: Text(
-                      '${day.day}',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  );
+      body: Container(
+        color: Colors.purple[100],
+        child: Column(
+          children: [
+            TableCalendar(
+              firstDay: DateTime.utc(2020, 1, 1),
+              lastDay: DateTime.utc(2030, 12, 31),
+              focusedDay: _focusedDay,
+              calendarFormat: _calendarFormat,
+              selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+              onDaySelected: (selectedDay, focusedDay) {
+                if (!_isDialogOpen) {
+                  setState(() {
+                    _selectedDay = selectedDay;
+                    _focusedDay = focusedDay;
+                    _selectedIntensity = _periodData[DateTime(
+                          selectedDay.year,
+                          selectedDay.month,
+                          selectedDay.day,
+                        )] ??
+                        1;
+                  });
+                  // Wait until after build to show dialog
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    _showIntensityDialog();
+                  });
                 }
-                return null;
               },
+              onFormatChanged: (format) {
+                setState(() {
+                  _calendarFormat = format;
+                });
+              },
+              onPageChanged: (focusedDay) {
+                _focusedDay = focusedDay;
+              },
+              calendarBuilders: CalendarBuilders(
+                defaultBuilder: (context, day, focusedDay) {
+                  // Check if this day has period data
+                  final eventDay = DateTime(day.year, day.month, day.day);
+                  final intensity = _periodData[eventDay];
+
+                  if (intensity != null) {
+                    return Container(
+                      margin: const EdgeInsets.all(4.0),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: _getFlowColor(intensity),
+                      ),
+                      child: Text(
+                        '${day.day}',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    );
+                  }
+                  return null;
+                },
+              ),
             ),
-          ),
-          const Divider(),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildLegendCard(),
-                    SizedBox(height: 16),
-                    _buildCycleSummaryCard(),
-                  ],
+            const Divider(),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildLegendCard(),
+                      SizedBox(height: 16),
+                      _buildCycleSummaryCard(),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -245,6 +249,7 @@ class _PeriodTrackerState extends State<PeriodTracker> {
   Widget _buildLegendCard() {
     return Card(
       elevation: 4,
+      // color: Colors.purple[100],
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -373,90 +378,92 @@ class _PeriodTrackerState extends State<PeriodTracker> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return SimpleDialog(
-          title: Text(hasEntry ? 'Update Period Entry' : 'Add Period Entry'),
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Date: $formattedDate'),
-                  SizedBox(height: 16),
-                  Text('Select Flow Intensity:'),
-                  SizedBox(height: 8),
-                  // Light Flow Option
-                  RadioListTile<int>(
-                    title: Text('Light Flow'),
-                    value: 1,
-                    groupValue: dialogIntensity,
-                    onChanged: (value) {
-                      setState(() {
-                        dialogIntensity = value!;
-                      });
-                    },
-                    activeColor: Colors.red.shade200,
-                  ),
-                  // Medium Flow Option
-                  RadioListTile<int>(
-                    title: Text('Medium Flow'),
-                    value: 2,
-                    groupValue: dialogIntensity,
-                    onChanged: (value) {
-                      setState(() {
-                        dialogIntensity = value!;
-                      });
-                    },
-                    activeColor: Colors.red.shade400,
-                  ),
-                  // Heavy Flow Option
-                  RadioListTile<int>(
-                    title: Text('Heavy Flow'),
-                    value: 3,
-                    groupValue: dialogIntensity,
-                    onChanged: (value) {
-                      setState(() {
-                        dialogIntensity = value!;
-                      });
-                    },
-                    activeColor: Colors.red.shade700,
-                  ),
-                  SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return SimpleDialog(
+              title:
+                  Text(hasEntry ? 'Update Period Entry' : 'Add Period Entry'),
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (hasEntry)
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            _removeEntry();
-                            _isDialogOpen = false;
-                          },
-                          child: Text('Remove'),
-                          style:
-                              TextButton.styleFrom(foregroundColor: Colors.red),
-                        ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          _isDialogOpen = false;
+                      Text('Date: $formattedDate'),
+                      SizedBox(height: 16),
+                      Text('Select Flow Intensity:'),
+                      SizedBox(height: 8),
+                      RadioListTile<int>(
+                        title: Text('Light Flow'),
+                        value: 1,
+                        groupValue: dialogIntensity,
+                        onChanged: (value) {
+                          setState(() {
+                            dialogIntensity = value!;
+                          });
                         },
-                        child: Text('Cancel'),
+                        activeColor: Colors.red.shade200,
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          _addOrUpdateEntry(dialogIntensity);
-                          _isDialogOpen = false;
+                      RadioListTile<int>(
+                        title: Text('Medium Flow'),
+                        value: 2,
+                        groupValue: dialogIntensity,
+                        onChanged: (value) {
+                          setState(() {
+                            dialogIntensity = value!;
+                          });
                         },
-                        child: Text('Save'),
+                        activeColor: Colors.red.shade400,
+                      ),
+                      RadioListTile<int>(
+                        title: Text('Heavy Flow'),
+                        value: 3,
+                        groupValue: dialogIntensity,
+                        onChanged: (value) {
+                          setState(() {
+                            dialogIntensity = value!;
+                          });
+                        },
+                        activeColor: Colors.red.shade700,
+                      ),
+                      SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          if (hasEntry)
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                _removeEntry();
+                                _isDialogOpen = false;
+                              },
+                              child: Text('Remove'),
+                              style: TextButton.styleFrom(
+                                  foregroundColor: Colors.red),
+                            ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              _isDialogOpen = false;
+                            },
+                            child: Text('Cancel'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              _addOrUpdateEntry(dialogIntensity);
+                              _isDialogOpen = false;
+                            },
+                            child: Text('Save'),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
-            ),
-          ],
+                ),
+              ],
+            );
+          },
         );
       },
     ).then((_) {

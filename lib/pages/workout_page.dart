@@ -18,7 +18,10 @@ class _WorkoutPage extends State<WorkoutPage> {
   void initState() {
     super.initState();
 
-    Provider.of<WorkoutData>(context, listen: false).initializeWorkoutList();
+    // Fix: Defer until after first build frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<WorkoutData>(context, listen: false).initializeWorkoutList();
+    });
   }
 
 // text controller
@@ -84,11 +87,35 @@ class _WorkoutPage extends State<WorkoutPage> {
     newWorkoutNameController.clear();
   }
 
+  void deleteWorkoutDialog(BuildContext context, String workoutName) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Delete Workout"),
+        content: Text("Are you sure you want to delete '$workoutName'?"),
+        actions: [
+          TextButton(
+            child: Text("Cancel"),
+            onPressed: () => Navigator.pop(context),
+          ),
+          TextButton(
+            child: Text("Delete", style: TextStyle(color: Colors.red)),
+            onPressed: () {
+              Provider.of<WorkoutData>(context, listen: false)
+                  .deleteWorkout(workoutName);
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<WorkoutData>(
       builder: (context, value, child) => Scaffold(
-        backgroundColor: Colors.grey[500],
+        backgroundColor: Colors.purple[100],
         appBar: AppBar(
           title: const Text("workout tracker"),
         ),
@@ -96,29 +123,39 @@ class _WorkoutPage extends State<WorkoutPage> {
           onPressed: createNewWorkout,
           child: const Icon(Icons.add),
         ),
-        body: ListView(
-          children: [
-            // HEAT MAP
-            MyHeatMap(
-              datasets: value.heatMapDataSet,
-              startDateYYYYMMDD: value.getStartDate(),
-            ),
-            // WORKOUT LIST
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: value.getWorkoutList().length,
-              itemBuilder: (context, index) => ListTile(
-                title: Text(value.getWorkoutList()[index].name),
-                trailing: IconButton(
-                  icon: Icon(Icons.arrow_forward_ios),
-                  onPressed: () =>
-                      goToWorkoutPage(value.getWorkoutList()[index].name),
+        body: ListView(children: [
+          // HEAT MAP
+          MyHeatMap(
+            datasets: value.heatMapDataSet,
+            startDateYYYYMMDD: value.getStartDate(),
+          ),
+          // WORKOUT LIST
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: value.getWorkoutList().length,
+            itemBuilder: (context, index) {
+              final workout = value.getWorkoutList()[index];
+              return ListTile(
+                title: Text(workout.name),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.delete, color: Colors.red),
+                      onPressed: () =>
+                          deleteWorkoutDialog(context, workout.name),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.arrow_forward_ios),
+                      onPressed: () => goToWorkoutPage(workout.name),
+                    ),
+                  ],
                 ),
-              ),
-            ),
-          ],
-        ),
+              );
+            },
+          ),
+        ]),
       ),
     );
   }

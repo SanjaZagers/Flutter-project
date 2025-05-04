@@ -7,6 +7,7 @@ class WeatherPage extends StatefulWidget {
   const WeatherPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _WeatherPageState createState() => _WeatherPageState();
 }
 
@@ -41,12 +42,17 @@ class _WeatherPageState extends State<WeatherPage> {
 
     switch (mainCondition.toLowerCase()) {
       case 'clouds':
-      case 'mist':
       case 'smoke':
       case 'haze':
       case 'dust':
-      case 'fog':
         return 'assets/cloud.json';
+
+      case 'mist':
+      case 'fog':
+        return 'assets/mist.json';
+
+      case 'snow':
+        return 'assets/snow.json';
 
       case 'rain':
       case 'drizzle':
@@ -75,16 +81,9 @@ class _WeatherPageState extends State<WeatherPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Weather"),
-        backgroundColor: Colors.deepPurple,
       ),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.deepPurple[300]!, Colors.deepPurple[700]!],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+        color: Colors.purple[100],
         child: Center(
           child: _weather == null
               ? const CircularProgressIndicator()

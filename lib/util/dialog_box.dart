@@ -2,6 +2,7 @@ import 'package:beginners_course/util/my_button.dart';
 import 'package:flutter/material.dart';
 
 class DialogBox extends StatelessWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final controller;
   VoidCallback onSave;
   VoidCallback onCancel;

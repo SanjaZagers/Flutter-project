@@ -82,11 +82,19 @@ class WorkoutData extends ChangeNotifier {
   }
 
   void checkOffExercise(String workoutName, String exerciseName) {
-    Exercise relevantExercise = getRelevantExercise(workoutName, exerciseName);
+    Exercise relevantExercise = getRelevantWorkout(workoutName)
+        .exercises
+        .firstWhere((exercise) => exercise.name == exerciseName);
+
     relevantExercise.isCompleted = !relevantExercise.isCompleted;
-    notifyListeners();
+
     db.saveToDatabase(workoutList);
-    loadHeatMap();
+    notifyListeners();
+
+    // OPTIONAL: just update today’s value in the heatmap (instead of reloading all)
+    final today = DateTime.now();
+    final key = DateTime(today.year, today.month, today.day);
+    heatMapDataSet[key] = heatMapDataSet[key] == 1 ? 0 : 1;
   }
 
   Workout getRelevantWorkout(String workoutName) {
@@ -101,5 +109,11 @@ class WorkoutData extends ChangeNotifier {
 
   String getStartDate() {
     return db.getStartDate();
+  }
+
+  void deleteWorkout(String workoutName) {
+    workoutList.removeWhere((workout) => workout.name == workoutName);
+    db.saveToDatabase(workoutList);
+    notifyListeners();
   }
 }

@@ -1,7 +1,6 @@
 import 'package:beginners_course/datatime/data_time.dart';
 import 'package:beginners_course/models/exercise.dart';
 import 'package:beginners_course/models/workout.dart';
-import 'package:beginners_course/data/workout_data.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HiveDatabase {
@@ -11,11 +10,9 @@ class HiveDatabase {
   // check if there is already data stored, if not, record the start date
   bool previousDataExists() {
     if (_myBox.isEmpty) {
-      print("previous data does NOT exist");
       _myBox.put("START DATE", todaysDateYYYYMMDD());
       return false;
     } else {
-      print("previous data does exist");
       return true;
     }
   }
@@ -127,17 +124,7 @@ List<String> convertObjectToWorkoutList(List<Workout> workouts) {
 
 // converts the exercises in a workout object into a list of strings
 List<List<List<String>>> convertObjectToExerciseList(List<Workout> workouts) {
-  List<List<List<String>>> exerciseList = [
-    /*
-    [
-    Upper body
-    [biceps, 10kg, 10 reps, 3 sets], [triceps, 20kg, 10reps, 3sets], ],
-  ]
-  Lower body 
-  [ [squats, 25kg, 10 reps, 3 sets], [legraise, 30kg, 10 reps, 3 sets], [calf, 10kg, 10reps, 3ets],
-  ]
-  */
-  ];
+  List<List<List<String>>> exerciseList = [];
 
   // go trough each workout
   for (int i = 0; i < workouts.length; i++) {
