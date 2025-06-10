@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:beginners_course/pages/profile_page.dart';
 import 'package:beginners_course/pages/settings_page.dart';
 
@@ -165,19 +164,50 @@ class HomeContent extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 16),
-                    Expanded(
+                    const Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Welcome, $userName",
-                            style: const TextStyle(
+                            "Welcome Sanja",
+                            style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
                               color: Colors.purple,
                             ),
                           ),
                         ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Date card with calendar icon
+            Card(
+              elevation: 4,
+              shadowColor: Colors.purple[30],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.calendar_today,
+                      color: Colors.purple[400],
+                      size: 24,
+                    ),
+                    const SizedBox(width: 12),
+                    Text(
+                      currentDate,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey[800],
                       ),
                     ),
                   ],
@@ -271,7 +301,7 @@ class HomeContent extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 36,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue,
+                            color: Color.fromARGB(255, 245, 119, 161),
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -291,36 +321,6 @@ class HomeContent extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-            // Date card with calendar icon
-            Card(
-              elevation: 4,
-              shadowColor: Colors.purple[30],
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.calendar_today,
-                      color: Colors.purple[400],
-                      size: 24,
-                    ),
-                    const SizedBox(width: 12),
-                    Text(
-                      currentDate,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey[800],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
             // Period
             Card(
               elevation: 4,
@@ -336,8 +336,8 @@ class HomeContent extends StatelessWidget {
                     const Row(
                       children: [
                         Icon(
-                          Icons.fitness_center,
-                          color: Colors.blue,
+                          Icons.bloodtype,
+                          color: Colors.red,
                           size: 28,
                         ),
                         SizedBox(width: 12),
@@ -360,7 +360,7 @@ class HomeContent extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 36,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue,
+                            color: Color.fromARGB(255, 245, 119, 161),
                           ),
                         ),
                         const SizedBox(width: 8),
