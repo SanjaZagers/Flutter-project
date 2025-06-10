@@ -1,6 +1,5 @@
 import 'package:beginners_course/components/exercise_tile.dart';
 import 'package:beginners_course/data/workout_data.dart';
-import 'package:beginners_course/models/exercise.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

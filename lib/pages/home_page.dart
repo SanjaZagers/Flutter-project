@@ -122,16 +122,16 @@ class _HomePageState extends State<HomePage>
 }
 
 class HomeContent extends StatelessWidget {
-  const HomeContent({Key? key}) : super(key: key);
+  const HomeContent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final String userName = " "; //change this in settings
+    const String userName = " "; //change this in settings
 //  final String moodCounter = " "; // change your daily mood
-    final String goodNews =
+    const String goodNews =
         "You've completed all tasks for today"; // New page with RSS news articles
-    final String lastWorkoutDays = "2";
-    final String currentDate = "May 4, 2025";
+    const String lastWorkoutDays = "2";
+    const String currentDate = "May 4, 2025";
     // final String lastPeriod = " ";
 
     return Container(

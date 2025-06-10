@@ -9,6 +9,8 @@ import 'dart:convert';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,6 +24,8 @@ class MyApp extends StatelessWidget {
 }
 
 class PeriodTracker extends StatefulWidget {
+  const PeriodTracker({super.key});
+
   @override
   _PeriodTrackerState createState() => _PeriodTrackerState();
 }
@@ -240,8 +244,8 @@ class _PeriodTrackerState extends State<PeriodTracker> {
             });
           }
         },
-        child: Icon(Icons.add),
         tooltip: 'Add Period Entry',
+        child: Icon(Icons.add),
       ),
     );
   }
@@ -431,9 +435,9 @@ class _PeriodTrackerState extends State<PeriodTracker> {
                                 _removeEntry();
                                 _isDialogOpen = false;
                               },
-                              child: Text('Remove'),
                               style: TextButton.styleFrom(
                                   foregroundColor: Colors.red),
+                              child: Text('Remove'),
                             ),
                           TextButton(
                             onPressed: () {
