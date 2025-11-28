@@ -95,11 +95,6 @@ class _HomePageState extends State<HomePage>
               onTap: () => _navigateFromDrawer(context, '/todopage'),
             ),
             ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text("S E T T I N G S"),
-              onTap: () => _navigateFromDrawer(context, '/settingspage'),
-            ),
-            ListTile(
               leading: const Icon(Icons.cloud),
               title: const Text("W E A T H E R"),
               onTap: () => _navigateFromDrawer(context, '/weatherpage'),
@@ -113,6 +108,11 @@ class _HomePageState extends State<HomePage>
               leading: const Icon(Icons.bloodtype),
               title: const Text("T R A C K E R"),
               onTap: () => _navigateFromDrawer(context, '/periodTracker'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.newspaper_rounded),
+              title: const Text("N E W S"),
+              onTap: () => _navigateFromDrawer(context, '/rssfeedpage'),
             ),
           ],
         ),
