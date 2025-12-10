@@ -112,7 +112,7 @@ class _HomePageState extends State<HomePage>
             ListTile(
               leading: const Icon(Icons.newspaper_rounded),
               title: const Text("N E W S"),
-              onTap: () => _navigateFromDrawer(context, '/rssfeedpage'),
+              onTap: () => _navigateFromDrawer(context, '/rssFeedPage'),
             ),
           ],
         ),

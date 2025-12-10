@@ -7,6 +7,7 @@ import 'package:beginners_course/pages/settings_page.dart';
 import 'package:beginners_course/pages/custom_text_field.dart';
 import 'package:beginners_course/pages/weather_page.dart';
 import 'package:beginners_course/pages/workout_page.dart';
+import 'package:beginners_course/pages/rssfeed_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +41,8 @@ class MyApp extends StatelessWidget {
           '/settingspage': (context) => const SettingsPage(),
           '/weatherpage': (context) => const WeatherPage(),
           '/workoutpage': (context) => const WorkoutPage(),
-          '/periodTracker': (context) => PeriodTracker(),
+          '/periodTracker': (context) => const PeriodTracker(),
+          "/rssfeedpage": (context) => const RssFeedPage(),
         },
       ),
     );
