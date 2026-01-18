@@ -1,4 +1,4 @@
-# Beginners Course
+# FLutter Passion Project
 
 A comprehensive Flutter application showcasing multiple features including workout tracking, to-do list management, weather information, period tracking, RSS feeds, and more. This project demonstrates best practices in Flutter development with state management, local data persistence, and integration with external APIs.
 
